@@ -5,9 +5,19 @@ import PetsList from '../components/PetsList'
 import NewPetModal from '../components/NewPetModal'
 import Loader from '../components/Loader'
 
+// const query = gql`
+//   query Pets{
+//     pets {
+//       name,
+//       id,
+//       img
+//     }
+//   }
+// `
 
 export default function Pets () {
   const [modal, setModal] = useState(false)
+  // const [] = useQuery()
 
 
   const onSubmit = input => {
