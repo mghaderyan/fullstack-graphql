@@ -44,11 +44,21 @@ export default function Pets () {
     createPet({
       variables: {
         newPet: input
+      },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        addPet: {
+          __typename: 'Pet',
+          id: Math.floor(Math.random() * 1000).toString(),
+          name: input.name,
+          type: input.type, 
+          img: 'https://www.dubaiautodrome.com/wp-content/uploads/2016/08/placeholder.png',
+        }
       }
     })
   }
   
-  if (loading || newPet.loading) {
+  if (loading) {
     return <Loader/>
   }
 
