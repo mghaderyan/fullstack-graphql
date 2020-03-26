@@ -10,3 +10,7 @@ This course comes with some [slides](https://docs.google.com/presentation/d/1IrG
 ## Solutions
 The solution branch has the completed course fo reference. There is no one way to finish this course.
 `git checkout solution`
+
+
+http://localhost:1234/
+http://localhost:4000/graphql
