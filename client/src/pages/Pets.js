@@ -5,25 +5,35 @@ import PetsList from '../components/PetsList'
 import NewPetModal from '../components/NewPetModal'
 import Loader from '../components/Loader'
 
+const PETS_FIELDS = gql`
+  fragment PetsFields on Pet{
+    name
+      id
+      img
+      vaccinated @client
+      owner {
+        id
+        age @client
+      }
+  }
+`
+
 const ALL_PETS = gql`
   query AllPets {
     pets {
-      name,
-      id,
-      img
+      ...PetsFields
     }
   }
+  ${PETS_FIELDS}
 `
 
 const NEW_PET = gql`
   mutation CreatePet($newPet: NewPetInput!) {
     addPet(input: $newPet) {
-      id
-      name
-      type
-      img
+      ...PetsFields
     }
   }
+  ${PETS_FIELDS}
 `
 
 export default function Pets () {
@@ -53,6 +63,11 @@ export default function Pets () {
           name: input.name,
           type: input.type, 
           img: 'https://www.dubaiautodrome.com/wp-content/uploads/2016/08/placeholder.png',
+          owner: {
+            __typename: 'User',
+            id: Math.floor(Math.random() * 1000).toString(),
+            age: 12,
+          }
         }
       }
     })
@@ -65,6 +80,8 @@ export default function Pets () {
   if (error || newPet.error) {
     return <p>error!</p>
   }
+
+  console.log(data.pets[0])
 
   if (modal) {
     return <NewPetModal onSubmit={onSubmit} onCancel={() => setModal(false)} />
